@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
     defaultConfig {
         applicationId 'zaldivar.walber.course.modern.art.rug'
-        minSdkVersion 18
+        minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
