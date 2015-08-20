@@ -52,7 +52,7 @@ public class RugActivity extends AppCompatActivity {
         colorSeekBarChangeListener = new OnColorSeekBarChangeListener(frameLayouts);
 
         colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
-        colorSeekBar.setMax(255);
+        colorSeekBar.setMax(0xff);
         colorSeekBar.setOnSeekBarChangeListener(colorSeekBarChangeListener);
     }
 
