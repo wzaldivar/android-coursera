@@ -4,56 +4,52 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.SeekBar;
-
-import java.util.ArrayList;
 
 public class RugActivity extends AppCompatActivity {
-    private SeekBar colorSeekBar;
-    private OnColorSeekBarChangeListener colorSeekBarChangeListener;
-    private final ArrayList<FrameLayout> frameLayouts = new ArrayList<FrameLayout>();
+//    private SeekBar colorSeekBar;
+//    private OnColorSeekBarChangeListener colorSeekBarChangeListener;
+//    private final ArrayList<FrameLayout> frameLayouts = new ArrayList<FrameLayout>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rug);
 
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame00));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame01));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame02));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame03));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame04));
-
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame10));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame11));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame12));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame13));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame14));
-
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame20));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame21));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame22));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame23));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame24));
-
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame30));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame31));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame32));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame33));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame34));
-
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame40));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame41));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame42));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame43));
-        frameLayouts.add((FrameLayout) findViewById(R.id.frame44));
-
-        colorSeekBarChangeListener = new OnColorSeekBarChangeListener(frameLayouts);
-
-        colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
-        colorSeekBar.setMax(0xff);
-        colorSeekBar.setOnSeekBarChangeListener(colorSeekBarChangeListener);
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame00));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame01));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame02));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame03));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame04));
+//
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame10));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame11));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame12));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame13));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame14));
+//
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame20));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame21));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame22));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame23));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame24));
+//
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame30));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame31));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame32));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame33));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame34));
+//
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame40));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame41));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame42));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame43));
+//        frameLayouts.add((FrameLayout) findViewById(R.id.frame44));
+//
+//        colorSeekBarChangeListener = new OnColorSeekBarChangeListener(frameLayouts);
+//
+//        colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
+//        colorSeekBar.setMax(0xff);
+//        colorSeekBar.setOnSeekBarChangeListener(colorSeekBarChangeListener);
     }
 
     @Override
@@ -71,7 +67,8 @@ public class RugActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_information) {
+            new MomaDialog().show(getFragmentManager(), "MOMA Dialog");
             return true;
         }
 

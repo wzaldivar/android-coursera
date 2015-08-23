@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import java.util.Random;
 
+// custom RGB information
 public class RGBInformation {
     private final int red;
     private final int green;
@@ -21,27 +22,29 @@ public class RGBInformation {
         blue = Color.blue(color);
     }
 
-    public static RGBInformation randomWhiteOrGray() {
+    public static RGBInformation getRandomWhiteOrGray() {
         Random random = new Random();
         if (random.nextBoolean()) {
+            // white
             return new RGBInformation(Color.WHITE);
         } else {
+            // some gray between LTGRAY and DKGRAY
             int gray = random.nextInt(LTGRAY_COMPONENTS - DKGRAY_COMPONENTS + 1) + DKGRAY_COMPONENTS;
             return new RGBInformation(Color.argb(NO_TRANSPARENCY, gray, gray, gray));
         }
     }
 
-    public static RGBInformation randomNonWhiteOrGrayOrBlack() {
+    public static RGBInformation getRandomNonWhiteOrGrayOrBlack() {
         Random random = new Random();
 
         RGBInformation rgbInformation;
         do {
-            rgbInformation = new RGBInformation(Color.argb(NO_TRANSPARENCY,
-                    random.nextInt(256), // red
-                    random.nextInt(256), // green
-                    random.nextInt(256)  // blue
-            ));
-        } while (rgbInformation.isGray());
+            int randomRed = random.nextInt(256);
+            int randomGreen = random.nextInt(256);
+            int randomBlue = random.nextInt(256);
+
+            rgbInformation = new RGBInformation(Color.argb(NO_TRANSPARENCY, randomRed, randomGreen, randomBlue));
+        } while (rgbInformation.isGray()); // be sure isn't gray
 
         return rgbInformation;
     }
@@ -62,12 +65,13 @@ public class RGBInformation {
         return Color.argb(NO_TRANSPARENCY, red, green, blue);
     }
 
+    // get RGBColor changed by a delta
     public int getRGBColor(int delta) {
+        delta = Math.abs(delta);
         return Color.argb(NO_TRANSPARENCY, calcDelta(red, delta), calcDelta(green, delta), calcDelta(blue, delta));
     }
 
     private static int calcDelta(int color, int delta) {
-        delta = Math.abs(delta);
         color = Math.abs(color - delta);
 
         if (color > 255) {
