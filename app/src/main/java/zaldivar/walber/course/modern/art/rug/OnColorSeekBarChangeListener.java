@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by wzaldivar on 18/08/15.
- */
 public class OnColorSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
     private final Map<FrameLayout, RGBInformation> startColors = new HashMap<FrameLayout, RGBInformation>();
@@ -41,12 +38,8 @@ public class OnColorSeekBarChangeListener implements SeekBar.OnSeekBarChangeList
         for (FrameLayout frameLayout : frameLayoutSet) {
             RGBInformation rgbInformation = startColors.get(frameLayout);
 
-            frameLayout.setBackgroundColor(Color.argb(
-                    0xff,
-                    Math.abs(rgbInformation.getRed() - progress),
-                    Math.abs(rgbInformation.getGreen() - progress),
-                    Math.abs(rgbInformation.getBlue() - progress)
-            ));
+//            frameLayout.setBackgroundColor(rgbInformation.getRGBColor(progress));
+            frameLayout.setBackgroundColor(RGBInformation.randomNonWhiteOrGrayOrBlack().getRGBColor());
         }
     }
 
