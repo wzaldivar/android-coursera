@@ -6,9 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class RugActivity extends AppCompatActivity {
-//    private SeekBar colorSeekBar;
-//    private OnColorSeekBarChangeListener colorSeekBarChangeListener;
-//    private final ArrayList<FrameLayout> frameLayouts = new ArrayList<FrameLayout>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
