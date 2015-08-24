@@ -4,7 +4,6 @@ import android.widget.FrameLayout;
 import android.widget.SeekBar;
 
 import java.util.Map;
-import java.util.Set;
 
 // custom listener for color bar
 public class OnColorSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
