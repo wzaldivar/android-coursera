@@ -174,7 +174,7 @@ public class DownloaderTaskFragment extends Fragment {
                             // TODO: Check whether or not the MainActivity
                             // received the broadcast
 
-                            if (true || false) {
+                            if (getResultCode()!= MainActivity.IS_ALIVE) {
 
                                 // TODO: If not, create a PendingIntent using
                                 // the
