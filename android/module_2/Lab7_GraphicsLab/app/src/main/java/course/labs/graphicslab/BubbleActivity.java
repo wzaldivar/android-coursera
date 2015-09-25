@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -80,15 +81,26 @@ public class BubbleActivity extends Activity {
                 .getStreamVolume(AudioManager.STREAM_MUSIC)
                 / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
-        // TODO - make a new SoundPool, allowing up to 10 streams
-        mSoundPool = null;
+        // make a new SoundPool, allowing up to 10 streams
+        mSoundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 
 
-        // TODO - set a SoundPool OnLoadCompletedListener that calls setupGestureDetector()
+        // set a SoundPool OnLoadCompletedListener that calls setupGestureDetector()
+        mSoundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                if (0 == status) {
+                    setupGestureDetector();
+                } else {
+                    Log.i(TAG, "Unable to load sound");
+                    finish();
+                }
+            }
+        });
 
 
-        // TODO - load the sound from res/raw/bubble_pop.wav
-        mSoundID = 0;
+        // load the sound from res/raw/bubble_pop.wav
+        mSoundID = mSoundPool.load(this, R.raw.bubble_pop, 1);
 
     }
 
@@ -157,8 +169,12 @@ public class BubbleActivity extends Activity {
     @Override
     protected void onPause() {
 
-        // TODO - Release all SoundPool resources
-
+        // Release all SoundPool resources
+        if (null != mSoundPool) {
+            mSoundPool.unload(mSoundID);
+            mSoundPool.release();
+            mSoundPool = null;
+        }
 
         super.onPause();
     }
@@ -252,8 +268,8 @@ public class BubbleActivity extends Activity {
 
             if (speedMode == RANDOM) {
 
-                // TODO - set rotation in range [1..3]
-                mDRotate = 0;
+                // set rotation in range [1..3]
+                mDRotate = r.nextInt(3) + 1;
 
 
             } else {
@@ -282,9 +298,11 @@ public class BubbleActivity extends Activity {
 
                 default:
 
-                    // TODO - Set movement direction and speed
+                    // Set movement direction and speed
                     // Limit movement speed in the x and y
                     // direction to [-3..3] pixels per movement.
+                    mDx = r.nextInt(7) - 3;
+                    mDy = r.nextInt(7) - 3;
 
 
             }
@@ -296,8 +314,8 @@ public class BubbleActivity extends Activity {
                 mScaledBitmapWidth = BITMAP_SIZE * 3;
 
             } else {
-                //TODO - set scaled bitmap size in range [1..3] * BITMAP_SIZE
-                mScaledBitmapWidth = 0;
+                // set scaled bitmap size in range [1..3] * BITMAP_SIZE
+                mScaledBitmapWidth = (r.nextInt(3) + 1) * BITMAP_SIZE;
 
             }
 
@@ -370,7 +388,9 @@ public class BubbleActivity extends Activity {
         // Change the Bubble's speed and direction
         private synchronized void deflect(float velocityX, float velocityY) {
 
-            //TODO - set mDx and mDy to be the new velocities divided by the REFRESH_RATE
+            // set mDx and mDy to be the new velocities divided by the REFRESH_RATE
+            mDx = velocityX / REFRESH_RATE;
+            mDy = velocityY / REFRESH_RATE;
 
 
         }
