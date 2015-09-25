@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/datos/coursera/my_coursera/android/module_2/Lab7_GraphicsLab/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/coursera/my_coursera/android/module_2/Lab7_GraphicsLab/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">GraphicsLab</string>
     <string name="quit_string">Quit</string>
