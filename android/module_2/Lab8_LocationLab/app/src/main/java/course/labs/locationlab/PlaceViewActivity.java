@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class PlaceViewActivity extends ListActivity implements LocationListener {
     private static final long FIVE_MINS = 5 * 60 * 1000;
@@ -69,8 +70,14 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 
             @Override
             public void onClick(View arg0) {
+                if (mLastLocationReading == null) {
 
-
+                } else if (mAdapter.intersects(mLastLocationReading)) {
+                    Toast.makeText(getApplicationContext(), "You already have this location badge.", Toast.LENGTH_LONG).show();
+                } else {
+                    PlaceDownloaderTask downloaderTask = new PlaceDownloaderTask(PlaceViewActivity.this, sHasNetwork);
+                    downloaderTask.execute(mLastLocationReading);
+                }
             }
 
         });
@@ -115,7 +122,7 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
     // Callback method used by PlaceDownloaderTask
     public void addNewPlace(PlaceRecord place) {
 
-        // TODO - Attempt to add place to the adapter, considering the following cases
+        // ODO - Attempt to add place to the adapter, considering the following cases
 
         // A PlaceBadge for this location already exists - issue a Toast message
         // with the text - "You already have this location badge." Use the PlaceRecord
@@ -132,7 +139,15 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 
         // Otherwise - add the PlaceBadge to the adapter
 
-
+        if (place == null) {
+            Toast.makeText(getApplicationContext(), "PlaceBadge could not be acquired", Toast.LENGTH_LONG).show();
+        } else if (mAdapter.intersects(place.getLocation())) {
+            Toast.makeText(getApplicationContext(), "You already have this location badge.", Toast.LENGTH_LONG).show();
+        } else if (place.getCountryName().equals("")) {
+            Toast.makeText(getApplicationContext(), "There is no country at this location", Toast.LENGTH_LONG).show();
+        } else {
+            mAdapter.add(place);
+        }
     }
 
     // LocationListener methods
