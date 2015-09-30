@@ -13,82 +13,82 @@ import android.widget.TextView;
 
 public class PlaceViewAdapter extends BaseAdapter {
 
-	private ArrayList<PlaceRecord> list = new ArrayList<PlaceRecord>();
-	private static LayoutInflater inflater = null;
-	private Context mContext;
+    private ArrayList<PlaceRecord> list = new ArrayList<PlaceRecord>();
+    private static LayoutInflater inflater = null;
+    private Context mContext;
 
-	public PlaceViewAdapter(Context context) {
-		mContext = context;
-		inflater = LayoutInflater.from(mContext);
-	}
+    public PlaceViewAdapter(Context context) {
+        mContext = context;
+        inflater = LayoutInflater.from(mContext);
+    }
 
-	public int getCount() {
-		return list.size();
-	}
+    public int getCount() {
+        return list.size();
+    }
 
-	public Object getItem(int position) {
-		return list.get(position);
-	}
+    public Object getItem(int position) {
+        return list.get(position);
+    }
 
-	public long getItemId(int position) {
-		return position;
-	}
+    public long getItemId(int position) {
+        return position;
+    }
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-		View newView = convertView;
-		ViewHolder holder;
+        View newView = convertView;
+        ViewHolder holder;
 
-		PlaceRecord curr = list.get(position);
+        PlaceRecord curr = list.get(position);
 
-		if (null == convertView) {
-			holder = new ViewHolder();
-			newView = inflater
-					.inflate(R.layout.place_badge_view, parent, false);
-			holder.flag = (ImageView) newView.findViewById(R.id.flag);
-			holder.country = (TextView) newView.findViewById(R.id.country_name);
-			holder.place = (TextView) newView.findViewById(R.id.place_name);
-			newView.setTag(holder);
+        if (null == convertView) {
+            holder = new ViewHolder();
+            newView = inflater
+                    .inflate(R.layout.place_badge_view, parent, false);
+            holder.flag = (ImageView) newView.findViewById(R.id.flag);
+            holder.country = (TextView) newView.findViewById(R.id.country_name);
+            holder.place = (TextView) newView.findViewById(R.id.place_name);
+            newView.setTag(holder);
 
-		} else {
-			holder = (ViewHolder) newView.getTag();
-		}
+        } else {
+            holder = (ViewHolder) newView.getTag();
+        }
 
-		holder.flag.setImageBitmap(curr.getFlagBitmap());
-		holder.country.setText("Country: " + curr.getCountryName());
-		holder.place.setText("Place: " + curr.getPlace());
+        holder.flag.setImageBitmap(curr.getFlagBitmap());
+        holder.country.setText("Country: " + curr.getCountryName());
+        holder.place.setText("Place: " + curr.getPlace());
 
-		return newView;
-	}
+        return newView;
+    }
 
-	static class ViewHolder {
+    static class ViewHolder {
 
-		ImageView flag;
-		TextView country;
-		TextView place;
+        ImageView flag;
+        TextView country;
+        TextView place;
 
-	}
+    }
 
-	public boolean intersects(Location location) {
-		for (PlaceRecord item : list) {
-			if (item.intersects(location)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public boolean intersects(Location location) {
+        for (PlaceRecord item : list) {
+            if (item.intersects(location)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public void add(PlaceRecord listItem) {
-		list.add(listItem);
-		notifyDataSetChanged();
-	}
+    public void add(PlaceRecord listItem) {
+        list.add(listItem);
+        notifyDataSetChanged();
+    }
 
-	public ArrayList<PlaceRecord> getList() {
-		return list;
-	}
+    public ArrayList<PlaceRecord> getList() {
+        return list;
+    }
 
-	public void removeAllViews() {
-		list.clear();
-		this.notifyDataSetChanged();
-	}
+    public void removeAllViews() {
+        list.clear();
+        this.notifyDataSetChanged();
+    }
 }
