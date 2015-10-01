@@ -2,4 +2,5 @@
     <string name="app_name">Daily Selfie</string>
 
     <string name="action_camera">Take Selfie</string>
+    <string name="no_dir">Can\'t access storage dir</string>
 </resources>
