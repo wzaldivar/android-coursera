@@ -10,13 +10,15 @@ import android.widget.Toast;
 import java.io.File;
 
 public class DailySelfieActivity extends AppCompatActivity {
+    // selfies storage dir
     private static final File DAILY_DIR = new File(Environment.getExternalStorageDirectory(), "DailySelfie");
 
+    // check access to selfies storage dir
     private boolean preparedDir() {
         return DAILY_DIR.mkdirs() || DAILY_DIR.isDirectory();
     }
 
-
+    // check write permission to selfies storage dir
     private boolean isWritable() {
         return preparedDir() && Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
