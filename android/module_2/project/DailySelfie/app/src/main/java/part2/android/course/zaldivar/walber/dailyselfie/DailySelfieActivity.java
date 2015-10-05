@@ -1,17 +1,28 @@
 package part2.android.course.zaldivar.walber.dailyselfie;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DailySelfieActivity extends AppCompatActivity {
     // selfies storage dir
     private static final File DAILY_DIR = new File(Environment.getExternalStorageDirectory(), "DailySelfie");
+    private static final int REQUEST_TAKE_SELFIE = 1;
+    private SelfieAdapter adapter;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss");
+    private File selfieFile;
+    private boolean filled = false;
 
     // check access to selfies storage dir
     private boolean preparedDir() {
@@ -28,10 +39,17 @@ public class DailySelfieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_selfie);
 
+        ListView listView = (ListView) findViewById(R.id.selfie_list);
+        adapter = new SelfieAdapter(this);
+
+        listView.setAdapter(adapter);
+
         if (!preparedDir()) {
             Toast.makeText(this, getText(R.string.no_dir), Toast.LENGTH_LONG).show();
             finish();
         }
+
+        adapter.fill(DAILY_DIR);
     }
 
     @Override
@@ -50,9 +68,39 @@ public class DailySelfieActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_camera) {
+
+            if (isWritable()) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    selfieFile = new File(DAILY_DIR, DATE_FORMAT.format(new Date()) + ".jpg");
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(selfieFile));
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_SELFIE);
+                }
+
+            } else {
+                Toast.makeText(this, R.string.cant_write, Toast.LENGTH_LONG).show();
+            }
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_SELFIE && resultCode == RESULT_OK) {
+            adapter.add(new SelfieInfo(selfieFile));
+
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri contentUri = Uri.fromFile(selfieFile);
+            mediaScanIntent.setData(contentUri);
+            sendBroadcast(mediaScanIntent);
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

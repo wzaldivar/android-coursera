@@ -3,4 +3,6 @@
 
     <string name="action_camera">Take Selfie</string>
     <string name="no_dir">Can\'t access storage dir</string>
+    <string name="selfie_thumbnail">Selfie thumbnail</string>
+    <string name="cant_write">Can\'t write to storage</string>
 </resources>
