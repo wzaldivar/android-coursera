@@ -1,5 +1,7 @@
 package part2.android.course.zaldivar.walber.dailyselfie;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ public class DailySelfieActivity extends AppCompatActivity {
     // selfies storage dir
     private static final File DAILY_DIR = new File(Environment.getExternalStorageDirectory(), "DailySelfie");
     private static final int REQUEST_TAKE_SELFIE = 1;
+    private static final long TWO_MIN = 2 * 60 * 1000;
     private SelfieAdapter adapter;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss");
     private File selfieFile;
@@ -37,6 +40,9 @@ public class DailySelfieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setupAlarm();
+
         setContentView(R.layout.activity_daily_selfie);
 
         ListView listView = (ListView) findViewById(R.id.selfie_list);
@@ -102,5 +108,12 @@ public class DailySelfieActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void setupAlarm() {
+        Intent intent = new Intent(this, NotificationLauncher.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(DailySelfieActivity.this, 0, intent, 0);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME, System.currentTimeMillis(), TWO_MIN, pendingIntent);
     }
 }
