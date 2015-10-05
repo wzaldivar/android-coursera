@@ -27,6 +27,7 @@ public class SelfieAdapter extends BaseAdapter implements View.OnTouchListener {
 
     public SelfieAdapter(final Context context) {
         inflater = LayoutInflater.from(context);
+
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
