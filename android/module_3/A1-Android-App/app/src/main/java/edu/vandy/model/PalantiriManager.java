@@ -40,12 +40,16 @@ public class PalantiriManager {
         // indicate it's available, and initialize the Semaphore to
         // use a "fair" implementation that mediates concurrent access
         // to the given number of Palantiri.
+        // TODO -- you fill in here.
 
         mPalantiriMap = new HashMap<Palantir, Boolean>();
+
+        // enable palantiri
         for (Palantir palantir : palantiri) {
             mPalantiriMap.put(palantir, true);
         }
 
+        // initialize "fair" semaphore
         mAvailablePalantiri = new Semaphore(palantiri.size(), true);
     }
 
@@ -60,17 +64,26 @@ public class PalantiriManager {
         // indicates it's available for use).  Replace the value of
         // this key with "false" to indicate the Palantir isn't
         // available and then return that palantir to the client.
+        // TODO -- you fill in here.
 
+        // wait for semaphore permission
         mAvailablePalantiri.acquireUninterruptibly();
 
-        for (Palantir palantir : mPalantiriMap.keySet()) {
-            if (mPalantiriMap.get(palantir)) {
-                mPalantiriMap.put(palantir, false);
-                return palantir;
+        Palantir availablePalantir = null;
+
+        synchronized (mPalantiriMap) {
+            // find an available palantir
+            for (Palantir palantir : mPalantiriMap.keySet()) {
+                if (mPalantiriMap.get(palantir)) {
+                    // disable palantir and return
+                    mPalantiriMap.put(palantir, false);
+                    availablePalantir = palantir;
+                    break;
+                }
             }
         }
 
-        return null;
+        return availablePalantir;
     }
 
     /**
@@ -81,8 +94,19 @@ public class PalantiriManager {
         // Put the "true" value back into HashMap for the palantir key
         // in a thread-safe manner and release the Semaphore if all
         // works properly.
+        // TODO -- you fill in here.
 
-        mPalantiriMap.put(palantir, true);
+        if (null == palantir) {
+            // go out on null palantir
+            return;
+        }
+
+        synchronized (mPalantiriMap) {
+            // disable palantir
+            mPalantiriMap.put(palantir, true);
+        }
+
+        // release semaphore permission
         mAvailablePalantiri.release();
     }
 
