@@ -15,7 +15,7 @@ public class PalantiriManager {
     /**
      * Debugging tag used by the Android logger.
      */
-    protected final static String TAG = 
+    protected final static String TAG =
         PalantiriManager.class.getSimpleName();
 
     /**
@@ -41,6 +41,25 @@ public class PalantiriManager {
         // Semaphore to use a "fair" implementation that mediates
         // concurrent access to the given Palantiri.
         // TODO -- you fill in here.
+
+        // Create a new ConcurrentHashMap,
+        mPalantiriMap = new ConcurrentHashMap<Palantir, Boolean>();
+
+        // iterate through the List of
+        // Palantiri and initialize each key in the HashMap with
+        // "true" to indicate it's available,
+        if (palantiri != null) {
+            for (Palantir palantir : palantiri) {
+                if (palantir != null) {
+                    mPalantiriMap.put(palantir, true);
+                }
+            }
+        }
+
+        // and initialize the
+        // Semaphore to use a "fair" implementation that mediates
+        // concurrent access to the given Palantiri.
+        mAvailablePalantiri = new Semaphore(mPalantiriMap.size(), true);
     }
 
     /**
@@ -57,9 +76,26 @@ public class PalantiriManager {
         // be *no* synchronized statements in this method.
         // TODO -- you fill in here.
 
+        // Acquire the Semaphore uninterruptibly
+        mAvailablePalantiri.acquireUninterruptibly();
+
+        // and then iterate
+        // through the ConcurrentHashMap to find the first key in the
+        // HashMap whose value is "true" (which indicates it's
+        // available for use) and atomically replace the value of this
+        // key with "false" to indicate the Palantir isn't available
+        // and then return that palantir to the client.  There should
+        // be *no* synchronized statements in this method.
+        for (Palantir palantir : mPalantiriMap.keySet()) {
+            if (mPalantiriMap.remove(palantir, true)) {
+                mPalantiriMap.put(palantir, false);
+                return palantir;
+            }
+        }
+
         // This shouldn't happen, but we need this here to make the
         // compiler happy.
-        return null; 
+        return null;
     }
 
     /**
@@ -72,6 +108,11 @@ public class PalantiriManager {
         // properly.  There should be *no* synchronized statements in
         // this method.
         // TODO -- you fill in here.
+
+        if (palantir != null) {
+            mPalantiriMap.replace(palantir, true);
+            mAvailablePalantiri.release();
+        }
     }
 
     /*
