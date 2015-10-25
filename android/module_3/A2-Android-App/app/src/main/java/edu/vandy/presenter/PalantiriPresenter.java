@@ -125,10 +125,6 @@ public class PalantiriPresenter
                     // identifies each Being.
                     // TODO -- you fill in here by replacing "return null"
                     // with the appropriate code.
-                    if (runnable == null) {
-                        return null;
-                    }
-
                     return new BeingThread(runnable, mBeingCount.getAndIncrement(), PalantiriPresenter.this);
                 }
             };
