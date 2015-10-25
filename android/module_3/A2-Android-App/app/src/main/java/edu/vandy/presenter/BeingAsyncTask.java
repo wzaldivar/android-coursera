@@ -1,9 +1,10 @@
 package edu.vandy.presenter;
 
-import java.util.concurrent.CountDownLatch;
-
 import android.os.AsyncTask;
 import android.util.Log;
+
+import java.util.concurrent.CountDownLatch;
+
 import edu.vandy.common.Utils;
 import edu.vandy.model.Palantir;
 import edu.vandy.utils.Options;
@@ -13,14 +14,14 @@ import edu.vandy.utils.Options;
  * gazing logic and provides a means for canceling an AsyncTask.
  */
 public class BeingAsyncTask
-       extends AsyncTask<PalantiriPresenter,
-                         Runnable,
-                         Void> {
+        extends AsyncTask<PalantiriPresenter,
+        Runnable,
+        Void> {
     /**
      * Used for Android debugging.
      */
-    private final static String TAG = 
-        BeingAsyncTask.class.getName();
+    private final static String TAG =
+            BeingAsyncTask.class.getName();
 
     /**
      * The index of the Being in the list, which is used to properly
@@ -64,7 +65,7 @@ public class BeingAsyncTask
                 // been cancelled.
                 // TODO -- you fill in here by replacing "false" with
                 // the appropriate method call to an AsyncTask method.
-                if (false) {
+                if (isCancelled()) {
                     // If we've been instructed to stop gazing, notify
                     // the UI and exit gracefully.
                     presenter.mView.get().threadShutdown(mIndex);
@@ -74,18 +75,19 @@ public class BeingAsyncTask
                 // Show that we're waiting on the screen.
                 // TODO -- you fill in here with the appropriate
                 // call to an AsyncTask method.
+                publishProgress(presenter.mView.get().markWaiting(mIndex));
 
                 // Get a Palantir - this call blocks if there are no
                 // available Palantiri.
                 palantir =
-                    presenter.getModel().acquirePalantir();
+                        presenter.getModel().acquirePalantir();
 
                 if (palantir == null)
                     Log.d(TAG,
-                          "Received a null palantir in "
-                          + Thread.currentThread().getId()
-                          + " for Being "
-                          + mIndex);
+                            "Received a null palantir in "
+                                    + Thread.currentThread().getId()
+                                    + " for Being "
+                                    + mIndex);
 
                 // Make sure we were supposed to get a Palantir.
                 if (!incrementGazingCountAndCheck(presenter))
@@ -94,10 +96,12 @@ public class BeingAsyncTask
                 // Mark it as used on the screen.
                 // TODO -- you fill in here with the appropriate
                 // call to an AsyncTask method.
+                publishProgress(presenter.mView.get().markUsed(palantir.getId()));
 
                 // Show that we're gazing on the screen.
                 // TODO -- you fill in here with the appropriate
                 // call to an AsyncTask method.
+                publishProgress(presenter.mView.get().markGazing(mIndex));
 
                 // Gaze at my Palantir for the alloted time.
                 palantir.gaze();
@@ -105,11 +109,13 @@ public class BeingAsyncTask
                 // Show that we're no longer gazing.
                 // TODO -- you fill in here with the appropriate
                 // call to an AsyncTask method.
+                publishProgress(presenter.mView.get().markIdle(mIndex));
                 Utils.pauseThread(500);
 
                 // Mark the Palantir as being free.
                 // TODO -- you fill in here with the appropriate call
                 // to an AsyncTask method.
+                publishProgress(presenter.mView.get().markFree(palantir.getId()));
                 Utils.pauseThread(500);
 
                 // Tell the double-checker that we're about to
@@ -117,8 +123,8 @@ public class BeingAsyncTask
                 decrementGazingCount(presenter);
             } catch (Exception e) {
                 Log.d(TAG,
-                      "Exception caught in index "
-                      + mIndex);
+                        "Exception caught in index "
+                                + mIndex);
 
                 // If we're interrupted by an exception, notify the UI and
                 // exit gracefully.
@@ -129,25 +135,28 @@ public class BeingAsyncTask
             }
 
         Log.d(TAG,
-              "Thread "
-              + mIndex
-              + " has finished "
-              + i 
-              + " of its "
-              + Options.instance().gazingIterations()
-              + " gazing iterations");
+                "Thread "
+                        + mIndex
+                        + " has finished "
+                        + i
+                        + " of its "
+                        + Options.instance().gazingIterations()
+                        + " gazing iterations");
         return (Void) null;
     }
 
     /**
      * Hook method invoked by the AsyncTask framework when
-     * doInBackground() calls publishProgress().  
+     * doInBackground() calls publishProgress().
      */
     @Override
-    public void onProgressUpdate(Runnable ...runnableCommands) {
+    public void onProgressUpdate(Runnable... runnableCommands) {
         // TODO -- you fill in here with the appropriate call to
         // the runnableCommands that will cause the progress
         // update to be displayed in the UI thread.
+        for (Runnable runnable : runnableCommands) {
+            runnable.run();
+        }
     }
 
     /**
@@ -182,13 +191,13 @@ public class BeingAsyncTask
      * (mGazingThreads).  If the number of gazing threads exceeds the
      * number of Palantiri, this thread will call shutdown and return
      * false.
-     * 
+     *
      * @return false if the number of gazing threads is greater
-     *         than the number of Palantiri, otherwise true.
+     * than the number of Palantiri, otherwise true.
      */
     private boolean incrementGazingCountAndCheck(PalantiriPresenter presenter) {
         final long numberOfGazingThreads =
-            presenter.mGazingTasks.incrementAndGet();
+                presenter.mGazingTasks.incrementAndGet();
 
         if (numberOfGazingThreads > Options.instance().numberOfPalantiri()) {
             presenter.shutdown();
