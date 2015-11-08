@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/datos/coursera/my_coursera/android/module_3/assignment3/app/libs/android-support-v13.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="94c00ce88ca3ba7e8d94f1d9b7a7522343712c41">
+        <dex dex="/datos/coursera/my_coursera/android/module_3/assignment3/app/build/intermediates/pre-dexed/debug/android-support-v13-c2f39141982f07b3bf095293a95f434fcd9ce604.jar" />
+    </item>
+
+</items>
