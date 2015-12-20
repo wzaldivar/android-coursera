@@ -19,7 +19,7 @@ import android.util.Log;
  * returns the image file's URI back to the ImageModelImpl's Handler
  * via the Messenger passed with the intent.
  */
-public class DownloadImagesStartedService 
+public class DownloadImagesStartedService
        extends IntentService {
     /**
      * Debugging tag used by the Android logger.
@@ -44,7 +44,7 @@ public class DownloadImagesStartedService
      * an image.
      */
     public static Intent makeIntent(Context context,
-                                    int requestCode, 
+                                    int requestCode,
                                     Uri url,
                                     Uri directoryPathname,
                                     Handler downloadHandler) {
@@ -54,7 +54,11 @@ public class DownloadImagesStartedService
         // containing the various parameters passed into this method
         // and (2) storing this RequestMessage as a Message "extra" in
         // the Intent.
-        return null;
+        Intent intent = new Intent(context, DownloadImagesStartedService.class);
+        Messenger messenger = new Messenger(downloadHandler);
+        RequestMessage requestMessage = RequestMessage.makeRequestMessage(requestCode, url, directoryPathname, messenger);
+        intent.putExtra(REQUEST_MESSAGE, requestMessage.getMessage());
+        return intent;
     }
 
     /**
@@ -73,19 +77,25 @@ public class DownloadImagesStartedService
 
         // Extract the URL for the image to download.
         // TODO -- you fill in here.
+        Uri url = requestMessage.getImageURL();
 
         // Download the requested image.
         // TODO -- you fill in here.
+        Uri directoryPathname = requestMessage.getDirectoryPathname();
+        Uri pathToImageFile = NetUtils.downloadImage(getApplicationContext(), url, directoryPathname);
 
         // Extract the request code.
         // TODO -- you fill in here.
+        int requestCode = requestMessage.getRequestCode();
 
         // Extract the Messenger stored in the RequestMessage.
         // TODO -- you fill in here.
+        Messenger messenger = requestMessage.getMessenger();
 
         // Send the path to the image file back to the
         // MainActivity via the messenger.
         // TODO -- you fill in here.
+        sendPath(messenger, pathToImageFile, url, requestCode);
     }
 
     /**
@@ -99,11 +109,13 @@ public class DownloadImagesStartedService
         // Call the makeReplyMessage() factory method to create
         // Message.
         // TODO -- you fill in here.
-        
+        ReplyMessage replyMessage = ReplyMessage.makeReplyMessage(pathToImageFile, url, requestCode);
+
         try {
             // Send the path to the image file back to the
             // ImageModelImpl's Handler via the Messenger.
             // TODO -- you fill in here.
+            messenger.send(replyMessage.getMessage());
         } catch (RemoteException e) {
             Log.e(getClass().getName(),
                   "Exception while sending reply message back to Activity.",
