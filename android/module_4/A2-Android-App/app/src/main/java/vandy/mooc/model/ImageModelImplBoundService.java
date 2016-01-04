@@ -17,7 +17,7 @@ import android.util.Log;
  * Android Bound Service.  It plays the role of the "Concrete
  * Implementor" in the Bridge pattern.
  */
-public class ImageModelImplBoundService 
+public class ImageModelImplBoundService
        extends ImageModelImpl {
     /**
      * Reference to the reply Messenger that's passed to the
@@ -33,11 +33,11 @@ public class ImageModelImplBoundService
      */
     private Messenger mRequestMessengerRef = null;
 
-    /** 
+    /**
      * Used to receive a reference to the RequestMessenger after
      * binding to the DownloadImagesBoundService using bindService().
      */
-    private ServiceConnection mServiceConnection = 
+    private ServiceConnection mServiceConnection =
         new ServiceConnection() {
             /**
              * Called by the Android Binder framework after the
@@ -47,13 +47,14 @@ public class ImageModelImplBoundService
             public void onServiceConnected(ComponentName className,
                                            IBinder binder) {
                 Log.d(TAG,
-                      "onServiceConnected() " 
+                      "onServiceConnected() "
                       + className);
 
                 // Create a new Messenger that encapsulates the
                 // returned IBinder object and store it for later use
                 // in mRequestMessengerRef.
                 // TODO -- you fill in here.
+                mRequestMessengerRef = new Messenger(binder);
             }
 
             /**
@@ -70,6 +71,7 @@ public class ImageModelImplBoundService
                 // null, thereby preventing send() calls until it's
                 // reconnected.
                 // TODO -- you fill in here.
+                mRequestMessengerRef = null;
             }
 	};
 
@@ -78,9 +80,9 @@ public class ImageModelImplBoundService
      */
     public ImageModelImplBoundService() {
         // Initialize the Reply Messenger.
-        mReplyMessenger = 
+        mReplyMessenger =
             new Messenger(this);
-    }        
+    }
 
     /**
      * Initiate the protocol for binding the Services.
@@ -95,12 +97,14 @@ public class ImageModelImplBoundService
             // that can download an image from the URL given by the
             // user.
             // TODO - you fill in here.
+            Intent intent = DownloadImagesBoundService.makeIntent(mImagePresenter.get().getActivityContext());
 
             Log.d(TAG,
                   "calling Context.bindService()");
 
             // Bind to the Service associated with the Intent.
             // TODO -- you fill in here.
+            mImagePresenter.get().getActivityContext().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
@@ -115,6 +119,7 @@ public class ImageModelImplBoundService
         if (mRequestMessengerRef != null) {
             // Unbind from the Service.
             // TODO -- you fill in here.
+            mImagePresenter.get().getActivityContext().unbindService(mServiceConnection);
 
             Log.d(TAG,
                   "calling Context.unbindService()");
@@ -122,7 +127,8 @@ public class ImageModelImplBoundService
             // Set this field to null to trigger a call to
             // bindService() next time bindService() is called.
             // TODO -- you fill in here.
-        } 
+            mRequestMessengerRef = null;
+        }
     }
 
     /**
@@ -141,7 +147,7 @@ public class ImageModelImplBoundService
     @Override
     public void startDownload(Uri url,
                               Uri directoryPathname) {
-        if (mRequestMessengerRef == null) 
+        if (mRequestMessengerRef == null)
             Utils.showToast(mImagePresenter.get().getActivityContext(),
                             "Not bound to the service");
         else {
@@ -163,6 +169,7 @@ public class ImageModelImplBoundService
                 // Send the request Message to the
                 // DownloadImagesBoundService.
                 // TODO -- you fill in here.
+                mRequestMessengerRef.send(requestMessage.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
