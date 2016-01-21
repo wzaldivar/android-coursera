@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/layout/download_weather_activity.xml",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/layout/download_weather_activity.xml"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/layout/display_weather_activity.xml",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/layout/display_weather_activity.xml"
+    }
+]

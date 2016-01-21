@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_clear.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_clear.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_clouds.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_clouds.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_light_clouds.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_light_clouds.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_light_rain.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_light_rain.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_storm.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_storm.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_fog.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_fog.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/item_pressed.9.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/item_pressed.9.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_rain.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_rain.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/ic_launcher.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/item_focused.9.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/item_focused.9.png"
+    },
+    {
+        "merged": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/build/intermediates/res/merged/debug/drawable-hdpi-v4/art_snow.png",
+        "source": "/home/wzaldivar/Online/Dropbox/assignment3/WeatherServiceAppP2Assignment3/src/main/res/drawable-hdpi/art_snow.png"
+    }
+]

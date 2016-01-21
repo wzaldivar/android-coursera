@@ -14,13 +14,13 @@ Moved Files:
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => app/src/main/AndroidManifest.xml
-* res/ => app/src/main/res/
-* src/ => app/src/main/java/
-* src/vandy/mooc/model/aidl/WeatherCall.aidl => app/src/main/aidl/vandy/mooc/model/aidl/WeatherCall.aidl
-* src/vandy/mooc/model/aidl/WeatherData.aidl => app/src/main/aidl/vandy/mooc/model/aidl/WeatherData.aidl
-* src/vandy/mooc/model/aidl/WeatherRequest.aidl => app/src/main/aidl/vandy/mooc/model/aidl/WeatherRequest.aidl
-* src/vandy/mooc/model/aidl/WeatherResults.aidl => app/src/main/aidl/vandy/mooc/model/aidl/WeatherResults.aidl
+* AndroidManifest.xml => WeatherServiceAppP2Assignment3/src/main/AndroidManifest.xml
+* res/ => WeatherServiceAppP2Assignment3/src/main/res/
+* src/ => WeatherServiceAppP2Assignment3/src/main/java/
+* src/vandy/mooc/model/aidl/WeatherCall.aidl => WeatherServiceAppP2Assignment3/src/main/aidl/vandy/mooc/model/aidl/WeatherCall.aidl
+* src/vandy/mooc/model/aidl/WeatherData.aidl => WeatherServiceAppP2Assignment3/src/main/aidl/vandy/mooc/model/aidl/WeatherData.aidl
+* src/vandy/mooc/model/aidl/WeatherRequest.aidl => WeatherServiceAppP2Assignment3/src/main/aidl/vandy/mooc/model/aidl/WeatherRequest.aidl
+* src/vandy/mooc/model/aidl/WeatherResults.aidl => WeatherServiceAppP2Assignment3/src/main/aidl/vandy/mooc/model/aidl/WeatherResults.aidl
 
 Next Steps:
 -----------
